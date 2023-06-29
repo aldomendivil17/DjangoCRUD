@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iniciar Sesión</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="{% static 'icheck-bootstrap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'adminlte.min.css' %}">
+</head>
+
+<body class="hold-transition login-page">
+  <!-- Preloader -->
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="{% static 'AdminLTELogo.png' %}" alt="AdminLTELogo" height="60" width="60">
+  </div>
+  <div class="login-box mb-4">
+    <div class="login-logo">
+      <b>Administrador</b> Peliculas
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">Inicia sesión para ingresar a tu cuenta</p>
+        {% if messages %}
+          {% for message in messages %}
+            {% if message.tags %}
+              {% if 'error' in message.tags %}
+                <div class="alert alert-danger" role="alert" style="font-size: 12px;">
+                  {{ message }}
+                </div>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        <form action="{% url 'login' %}" method="post">
+          {% csrf_token %}
+          <div class="input-group mb-3">
+            <input type="text" name="username" class="form-control" placeholder="Usuario" required>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fa fa-envelope"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fa fa-lock fa-3"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-7">
+              <div class="icheck-primary">
+                <!-- <input type="checkbox" id="remember">
+                <label for="remember">
+                  Recuérdame
+                </label> -->
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-5">
+              <button type="submit" class="btn btn-primary btn-block">Iniciar sesión</button>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+
+
+        <!-- <div class="social-auth-links text-center mb-3">
+          <p>- OR -</p>
+          <a href="#" class="btn btn-block btn-primary">
+            <i class="fa fa-facebook mr-2"></i> Sign in using Facebook
+          </a>
+          <a href="#" class="btn btn-block btn-danger">
+            <i class="fa fa-google-plus mr-2"></i> Sign in using Google+
+          </a>
+        </div> -->
+        <!-- /.social-auth-links -->
+
+        <!-- <p class="mb-1">
+          <a href="forgot-password.html">I forgot my password</a>
+        </p>
+        <p class="mb-0">
+          <a href="register.html" class="text-center">Register a new membership</a>
+        </p> -->
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+  <!-- /.login-box -->
+
+  <!-- jQuery -->
+  <script src="{% static 'jquery.min.js' %}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+  <!-- AdminLTE App -->
+  <script src="{% static 'adminlte.min.js' %}"></script>
+</body>
+
+</html>

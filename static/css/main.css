@@ -1,0 +1,14 @@
+body{
+    background: #202020;
+    color: white;
+}
+
+div#cards{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+h1#csa{
+    color:#202020;
+}

@@ -1,0 +1,99 @@
+{% extends './templates/base.html' %}
+{% load static %}
+
+{% block title %}
+Django | Peliculas-editar
+{% endblock %}
+
+
+
+{% block css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{% endblock %}
+
+{% block user-name %}
+Aldo Mendivil
+{% endblock %}
+
+{% block main-title %}
+Peliculas
+{% endblock %}
+{% block secondary-title %}
+Editar
+{% endblock %}
+
+{% block guion-title %}
+|
+{% endblock %}
+
+{% block active1 %}
+active
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="d-flex justify-content-end " style="color: rgb(48, 48, 48);"><strong class="m-1">ID:</strong>
+                <span class="m-1">{{pelicula_obj.id}}</span></h5>
+            <div class="card card-body mt-3">
+                <form action="{% url 'peliculas:actualizar_pelicula' pelicula_obj.id %}" method="POST">
+                    {% csrf_token %}
+                    <label for="titulo">Título:</label>
+                    <input type="text" name="titulo" value="{{pelicula_obj.titulo   }}" class="form-control mb-2"
+                        required>
+                    <label for="anhio">Año:</label>
+                    <input type="number" name="anhio" value="{{pelicula_obj.anhio}}" class="form-control mb-2" required>
+                    <label for="director">Director:</label>
+                    <input type="text" name="director" value="{{pelicula_obj.director}}" class="form-control mb-2"
+                        required>
+                    <label for="genero">Genero(s):</label>
+                    <style>
+                        .select2-container--classic .select2-dropdown {
+                            background-color: #ffffff;
+                            border: 1px solid;
+                        }
+                    </style>
+                    <div class="mb-3">
+                        <select id="seleccion" name="genero" size="3" multiple
+                            class="form-select" required>
+                            {% for genero in generos %}
+                            {% if genero in pelicula_obj.generos.all %}
+                            <option value="{{genero.id}}" selected>{{genero.nombre}}</option>
+                            {% else %}
+                            <option value="{{genero.id}}">{{genero.nombre}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            $('#seleccion').select2({
+                                theme: "classic",
+                                placeholder: " Selecciona uno o más generos",
+                                dropdownCssClass: "custom-dropdown-class",
+                            });
+                        });
+                    </script>
+                    <div class="d-flex justify-content-end">
+                        <a href="{% url 'peliculas:lista_peliculas' %}" class="btn btn-secondary">Cancelar</a>
+                        <button class="btn btn-success ml-3">Guardar</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

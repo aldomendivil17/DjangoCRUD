@@ -1,0 +1,92 @@
+{% extends './templates/base.html' %}
+{% load static %}
+
+{% block title %}
+Django | Usuario-editar
+{% endblock %}
+
+{% block css%}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'main.css' %}">
+{% endblock %}
+
+{% block js%}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+</script>
+{% endblock %}
+
+{% block main-title %}
+Configuración de usuario
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-body mt-3">
+                <!-- Cambiar username -->
+                <form action="{% url 'usuarios:actualizarUsuario' %}" method="POST" class="mb-5">
+                    {% csrf_token %}
+                    <div class="d-flex m-2 mb-2">
+                        <h4>Editar nombre de usuario</h4>
+                    </div>
+                    <label for="nombre"  style="color: rgb(82, 82, 82);">Nombre de usuario (actual):</label> 
+                    <input type="text" name="username" class="form-control mb-2" value="{{user.username}}" readonly>
+                    <label for="new_username" style="color: rgb(82, 82, 82);">Nombre de usuario (nuevo): </label>
+                    <input type="text" name="new_username" class="form-control" value="" required >
+                    <label style="color: rgb(114, 114, 114); size: 5px;" class="m-2"><small>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small></label>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-success ml-3">Actualizar</button>
+                    </div>
+                </form>
+
+
+                <!-- Cambiar imagen -->
+                <form action="{% url 'usuarios:cambiarImagen' %}" method="POST" class="mb-5" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="d-flex m-2 mb-2">
+                        <h4>Cambiar imagen de perfil</h4>
+                    </div>
+                    <input type="file" name="image" >
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-success ml-3">Actualizar</button>
+                    </div>
+                </form>
+
+                
+
+
+                <!-- Cambiar password -->
+                <form action="{% url 'usuarios:actualizarContraseña' %}" method="POST" >
+                    {% csrf_token %}
+                    <div class="d-flex m-2 mb-2">
+                        <h4>Editar contraseña</h4>
+                    </div>
+                    <label for="actualContraseña"  style="color: rgb(82, 82, 82);">Contraseña actual:</label>
+                    <input type="password" name="actualContraseña" class="form-control mb-2" value="" required>
+                    <label for="nuevaContraseña"  style="color: rgb(82, 82, 82);">Contraseña nueva:</label>
+                    <input type="password" name="nuevaContraseña" class="form-control mb-2" value="" required>
+                    <label for="confirmacionNuevaContraseña"  style="color: rgb(82, 82, 82);">Contraseña nueva (confirmación): </label>
+                    <input type="password" name="confirmacionNuevaContraseña" class="form-control" value="" required>
+                    <div class="m-2">
+                        <label style="color: rgb(114, 114, 114); size: 5px;" ><small>Tu contraseña no puede ser muy similar a alguna información personal.</small></label><br>
+                        <label style="color: rgb(114, 114, 114); size: 5px;" ><small>Tu contraseña debe contener al menos 9 caracteres.</small></label><br>
+                        <label style="color: rgb(114, 114, 114); size: 5px;" ><small>Tu contraseña no puede ser una contraseña comunmente utilizada.</small></label><br>
+                        <label style="color: rgb(114, 114, 114); size: 5px;" ><small>Tu contraseña debe contener al menos un dígito, 0-9.</small></label><br>
+                        <label style="color: rgb(114, 114, 114); size: 5px;" ><small>Tu contraseña debe contener al menos una letra mayúscula, A-Z.</small></label><br>
+                        <label style="color: rgb(114, 114, 114); size: 5px;" ><small>Tu contraseña debe contener al menos un caracter especial: ()[]{}|\'. </small></label><br>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-success ml-3">Cambiar contraseña</button>
+                    </div>
+                </form>
+                <div class="d-flex m-2 justify-content-center">
+                    <img src={{user.picture.url}} class="elevation-2" alt="User Image" style="width: 150px; height: 200px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
