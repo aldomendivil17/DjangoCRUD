@@ -86,10 +86,9 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src={{user.picture.url}} class="img-circle elevation-2" alt="User Image" style="width: 35  px; height: 40px;">
+            <img src={{user.picture.url}} class="img-circle" alt="User Image" style="width: 40px; height: 40px;">
           </div>
-          <div class="info">
-            
+          <div class="info mt-1">
             <a href="{% url 'usuarios:actualizarUser_screen' %}" class="d-block" style="text-decoration: none;">{{ user.username }}</a>
             
           </div>
