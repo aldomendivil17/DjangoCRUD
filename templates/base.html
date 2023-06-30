@@ -34,11 +34,8 @@
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-
+  <!-- Css extras -->
   {% block css %}{% endblock %}
-
-  
-
 
 
   <!-- sweetalert js -->
@@ -49,10 +46,10 @@
 
   <div class="wrapper">
 
-        <!-- Preloader -->
-        <div class="preloader flex-column justify-content-center align-items-center">
-          <img class="animation__shake" src="{% static 'AdminLTELogo.png' %}" alt="AdminLTELogo" height="60" width="60">
-        </div>
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+      <img class="animation__shake" src="{% static 'AdminLTELogo.png' %}" alt="AdminLTELogo" height="60" width="60">
+    </div>
 
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -85,13 +82,15 @@
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img src={{user.picture.url}} class="img-circle" alt="User Image" style="width: 40px; height: 40px;">
-          </div>
-          <div class="info mt-1">
-            <a href="{% url 'usuarios:actualizarUser_screen' %}" class="d-block" style="text-decoration: none;">{{ user.username }}</a>
-            
-          </div>
+          <a href="{% url 'usuarios:actualizarUser_screen' %}">
+            <div class="image">
+              <img src={{user.picture.url}} class="img-circle" alt="User Image" style="width: 40px; height: 40px;">
+            </div>
+            <div class="info mt-1">
+              <a href="{% url 'usuarios:actualizarUser_screen' %}" class="d-block"
+                style="text-decoration: none;">{{ user.username }}</a>
+            </div>
+          </a>
         </div>
         {% endif %}
 
@@ -223,8 +222,8 @@
   </script>
   <!-- Bootstrap 4 -->
   <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
- 
-   <!-- jQuery Knob Chart -->
+
+  <!-- jQuery Knob Chart -->
   <script src="{% static 'jquery.knob.min.js' %}"></script>
   <!-- daterangepicker -->
   <script src="{% static 'moment.min.js' %}"></script>
@@ -237,8 +236,8 @@
   <script src="{% static 'jquery.overlayScrollbars.min.js' %}"></script>
   <!-- AdminLTE App -->
   <script src="{% static 'adminlte.js' %}"></script>
-  
 
+  <!-- Js extras -->
   {% block js %}{% endblock %}
 
 </body>
