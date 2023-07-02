@@ -28,6 +28,9 @@ Configuración de usuario
             <form action="{% url 'usuarios:modificarUsuario' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="card card-body mt-3">
+
+
+
                     <!-- Cambiar username -->
                     <div class="d-flex m-2 mb-2">
                         <h4>Nombre de usuario</h4>
@@ -35,10 +38,33 @@ Configuración de usuario
                     <label for="nombre" style="color: rgb(82, 82, 82);">Nombre de usuario (actual):</label>
                     <input type="text" name="username" class="form-control mb-2" value="{{user.username}}" readonly>
                     <label for="new_username" style="color: rgb(82, 82, 82);">Nombre de usuario (nuevo): </label>
-                    <input type="text" name="new_username" class="form-control" value="" >
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if 'error' in message.tags %}
+                                {% if 'error_username' in message.tags %}
+                                    <input type="text" name="new_username" class="form-control" value=""
+                                    style="background-color: rgba(255, 2, 2, 0.342);" placeholder="Escriba de nuevo...">
+                                {% endif %}
+                                {% if not 'error_username' in message.tags %}
+                                    <input type="text" name="new_username" class="form-control" value="">
+                                {% endif %}
+                            {% endif %}
+                            {% if not 'error' in message.tags %}
+                                <input type="text" name="new_username" class="form-control" value="">
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if not messages %}
+                    <input type="text" name="new_username" class="form-control" value="">
+                    {% endif %}
                     <label style="color: rgb(114, 114, 114); size: 5px;" class="m-2"><small>Requerido. 150 caracteres o
                             menos. Solo letras, dígitos y @/./+/-/_.</small></label>
                     <hr class="mb-4">
+
+
+
 
                     <!-- Cambiar imagen -->
 
@@ -46,9 +72,11 @@ Configuración de usuario
                         <h4>Foto de perfil</h4>
                     </div>
                     <div class="d-flex">
-                        <img src={{user.picture.url}} class="elevation-2 m-2" alt="User Image" style="width: 150px; height: 200px;">
+                        <img src={{user.picture.url}} class="elevation-2 m-2" alt="User Image"
+                            style="width: 150px; height: 200px;">
                     </div>
-                    <label style="color: rgb(114, 114, 114); size: 5px;" class="mb-3 ml-2"><small><b>Imagen actual:</b>{{user.picture.url}}</small></label><br>
+                    <label style="color: rgb(114, 114, 114); size: 5px;" class="mb-3 ml-2"><small><b>Imagen
+                                actual:</b>{{user.picture.url}}</small></label><br>
                     <input type="file" name="image"></input>
                     <hr class="mb-4">
 
@@ -60,12 +88,12 @@ Configuración de usuario
                         <h4>Contraseña</h4>
                     </div>
                     <label for="actualContraseña" style="color: rgb(82, 82, 82);">Contraseña actual:</label>
-                    <input type="password" name="actualContraseña" class="form-control mb-2" value="" >
+                    <input type="password" name="actualContraseña" class="form-control mb-2" value="">
                     <label for="nuevaContraseña" style="color: rgb(82, 82, 82);">Contraseña nueva:</label>
-                    <input type="password" name="nuevaContraseña" class="form-control mb-2" value="" >
+                    <input type="password" name="nuevaContraseña" class="form-control mb-2" value="">
                     <label for="confirmacionNuevaContraseña" style="color: rgb(82, 82, 82);">Contraseña nueva
                         (confirmación): </label>
-                    <input type="password" name="confirmacionNuevaContraseña" class="form-control" value="" >
+                    <input type="password" name="confirmacionNuevaContraseña" class="form-control" value="">
                     <style>
                         .input-label {
                             margin-bottom: 3px;
@@ -90,12 +118,15 @@ Configuración de usuario
                 </div>
                 <div class="card card-body mt-3">
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-success ml-3">Cambiar cambios</button>
-                    </div>
-                </div>
-                
+                        <button type="submit" class="btn btn-success ml-3">Guarcar cambios</button>
+            </form>
+            <form action="{% url 'peliculas:lista_peliculas' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary ml-3">Cancelar</button>
             </form>
         </div>
     </div>
+</div>
+</div>
 </div>
 {% endblock %}

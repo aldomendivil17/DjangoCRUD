@@ -4,6 +4,8 @@ from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.hashers import check_password
+from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 
 # Create your views here.
 
@@ -22,7 +24,7 @@ def modificarUsuario(request):
         usuario = request.user
 
         #username
-        new_username = request.POST.get('new_username') 
+        new_username = request.POST.get('new_username')
 
         #imagen
         image_file = request.FILES.get('image')
@@ -31,13 +33,25 @@ def modificarUsuario(request):
         actualContraseña = request.POST.get('actualContraseña')
         nuevaContraseña = request.POST.get('nuevaContraseña')
         confirmacionNuevaContraseña = request.POST.get('confirmacionNuevaContraseña')
-        if new_username != "" and new_username != usuario.username:
-            usuario.username = new_username
 
+
+        if new_username != "" and new_username != usuario.username:
+            regex = r'^[\w]+$'
+            validator = RegexValidator(regex=regex, message="El username debe contener solo letras, números y guiones bajosd.")
+            try:
+                validator(new_username)
+                usuario.username = new_username
+            except ValidationError as e:
+                print('si pasa')
+                mensajes = 1
+                messages.success(request,"El username debe contener solo letras, números y guiones bajos.. Intenta otra vez", extra_tags='error_username')
         if image_file:
             usuario.picture = image_file
         else:
-            print('hola')   
+            print('hola')  
+
+
+
         if actualContraseña and nuevaContraseña and confirmacionNuevaContraseña:
             if check_password(actualContraseña, usuario.password):
                 if nuevaContraseña == confirmacionNuevaContraseña:
